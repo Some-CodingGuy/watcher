@@ -47,27 +47,31 @@ def addRoleToNewMembers(guild, role):
     for member in newMembers:
         member.add_roles(role, reason=f"{member.name} joined in the last 7 days")
 
-class CustomClient(discord.Client):
-    async def on_ready(self):
-        print(f'{self.user} has connected to Discord!')
+
+@client.event
+async def on_member_join(member):
+    member.add_roles(role_id, reason=f"{member.name} just joined!")
 
 
-@commands.Cog.listener()
-async def on_voice_state_update(self, member, before, after):
-    try:
-        guild = self.bot.get_guild(member.guild.id)
-        role = guild.get_role(role_id)
-
-        # If this is the firs time we run the bot, it won't find any members from the previous day, so this part will be skipped
-        # If there is a list of the new members of the day before, it checks to see if they still have been on the server for less than 7 days
-        #   if they have been on the server for longer, the "new member" role is removed
-        removeRoleFromOldMembers(newMembers, guild, role)
-
-        # List of new members gets updated
-        updateSeniorityList(guild)
-
-        addRoleToNewMembers(guild, role)
 
 
-    finally:
-        print()
+
+# @commands.Cog.listener()
+# async def on_voice_state_update(self, member, before, after):
+#     try:
+#         guild = self.bot.get_guild(member.guild.id)
+#         role = guild.get_role(role_id)
+
+#         # If this is the firs time we run the bot, it won't find any members from the previous day, so this part will be skipped
+#         # If there is a list of the new members of the day before, it checks to see if they still have been on the server for less than 7 days
+#         #   if they have been on the server for longer, the "new member" role is removed
+#         removeRoleFromOldMembers(newMembers, guild, role)
+
+#         # List of new members gets updated
+#         updateSeniorityList(guild)
+
+#         addRoleToNewMembers(guild, role)
+
+
+    # finally:
+    #     print()
