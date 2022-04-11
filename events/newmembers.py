@@ -51,6 +51,8 @@ def addRoleToNewMembers(guild, role):
 @client.event
 async def on_member_join(member):
     member.add_roles(role_id, reason=f"{member.name} just joined!")
+    time.sleep(345600) # wait 4 days until we remove the role
+    member.remove_roles(role_id, reason=f"{member.name} has been in the server for 4 days already")
 
 
 
